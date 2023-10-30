@@ -11,7 +11,7 @@ public:
         // return -1;
 
         // or 
-
+        // Negitive Visited solution
         // for(int i=0; i<nums.size(); i++){
         //     int index = abs(nums[i]);
         //     if(nums[index]<0){
@@ -22,7 +22,7 @@ public:
         // return -1;
 
         // or 
-
+        // Positional approch
         while(nums[0] != nums[nums[0]]){
             swap(nums[0], nums[nums[0]]);
         }
