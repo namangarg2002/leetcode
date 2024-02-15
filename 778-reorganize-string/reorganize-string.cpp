@@ -6,24 +6,24 @@ public:
             hash[s[i] -'a']++;
         }
         // find the most frequent char
-        char most_freq_char;
+        char max_freq_char;
         int max_freq = INT_MIN;
         for(int i=0; i<26; i++){
             if(hash[i] > max_freq){
                 max_freq = hash[i];
-                most_freq_char = i + 'a';
+                max_freq_char = i + 'a';
             }
         }
         int index = 0;
         while(max_freq > 0 && index < s.size()){
-            s[index] = most_freq_char;
+            s[index] = max_freq_char;
             max_freq--;
             index += 2;
         }
         if(max_freq != 0){
             return "";
         }
-        hash[most_freq_char - 'a'] = 0;
+        hash[max_freq_char - 'a'] = 0;
 
         // lets place the rest of the characters.
         for(int i=0; i<26; i++){
