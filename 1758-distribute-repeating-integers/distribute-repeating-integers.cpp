@@ -25,7 +25,7 @@ public:
         counts.push_back(it.second);
        }
 
-       sort(quantity.begin(), quantity.end(), greater<int>());
+       sort(quantity.rbegin(), quantity.rend());
        return canDistributeHelper(counts, quantity, 0);
     }
 };
