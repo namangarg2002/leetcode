@@ -8,8 +8,9 @@ public:
                 // for open brackets-> just push
                 st.push(ch);
             }else{
+                // Check if stack is empty before accessing the top
                 if(st.empty()) {
-                    return false; // Closing bracket with no matching opening bracket
+                    return false;
                 }
                 // closing bracket
                 if((ch == ')' && st.top() == '(') || (ch == '}' && st.top() == '{') || (ch == ']' && st.top() == '[')){
@@ -21,6 +22,10 @@ public:
 
             }
         }
-        return st.empty();
+        if(st.size() == 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 };
