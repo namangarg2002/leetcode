@@ -13,8 +13,8 @@ public:
                 if(st.empty()){
                     st.push(i);
                 }else{
-                    // int len = i - st.top();
-                    maxLen = max(maxLen,i - st.top());
+                    int len = i - st.top();
+                    maxLen = max(maxLen,len);
                 }
             }
         }
