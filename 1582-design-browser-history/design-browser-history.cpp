@@ -30,7 +30,7 @@ public:
     
     string forward(int steps) {
         while(steps--){
-            if(fwdStack.size() > 0){
+            if(!fwdStack.empty()){
                 browserStack.push(fwdStack.top());
                 fwdStack.pop();
             }else{
