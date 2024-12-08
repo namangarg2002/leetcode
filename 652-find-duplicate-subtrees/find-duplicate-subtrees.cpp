@@ -22,7 +22,7 @@ public:
 
         string str = curr + "," + fromLeft + "," + fromRight;
 
-        if(subTreeMap.find(str) != subTreeMap.end()){
+        if(subTreeMap.count(str) > 0){
             if(subTreeMap[str] == 1){
                 ans.push_back(root);
             }
