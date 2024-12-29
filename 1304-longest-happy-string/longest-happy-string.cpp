@@ -44,7 +44,7 @@ public:
                 first.value--;
             }
 
-            if(second.value >= 2 && second.value % 2 != 0 && second.value >= first.value){
+            if(second.value >= 2 && second.value >= first.value){
                 ans.push_back(second.name);
                 ans.push_back(second.name);
                 second.value -= 2;
