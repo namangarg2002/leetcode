@@ -56,7 +56,9 @@ public:
             Info* top = maxHeap.top();
             maxHeap.pop();
 
-            if(top->count > 1){
+            top->count--;
+
+            if(top->count != 0){
                 // answer not possible
                 delete top;
                 return "";
