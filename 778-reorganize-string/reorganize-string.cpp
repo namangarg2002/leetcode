@@ -1,39 +1,71 @@
 class Solution {
 public:
+    struct Info{
+        char val;
+        int count;
+        Info(char ch, int cnt) : val{ch}, count{cnt} {}
+    };
+    struct compare{
+        bool operator()(Info* a, Info* b){
+            return a->count < b->count;
+        }
+    };
     string reorganizeString(string s) {
-        int hash[26] = {0};
-        for(int i=0; i<s.size(); i++){
-            hash[s[i] -'a']++;
-        }
-        // find the most frequent char
-        char max_freq_char;
-        int max_freq = INT_MIN;
-        for(int i=0; i<26; i++){
-            if(hash[i] > max_freq){
-                max_freq = hash[i];
-                max_freq_char = i + 'a';
-            }
-        }
-        int index = 0;
-        while(max_freq > 0 && index < s.size()){
-            s[index] = max_freq_char;
-            max_freq--;
-            index += 2;
-        }
-        if(max_freq != 0){
-            return "";
-        }
-        hash[max_freq_char - 'a'] = 0;
+        int freq[26] = {0};
 
-        // lets place the rest of the characters.
+        // count freq of all character in string
+        for(int i=0; i<s.length(); i++){
+            char ch = s[i];
+            freq[ch-'a']++;
+        }
+        // push all character in maxHeap
+        priority_queue<Info*, vector<Info*>, compare>maxHeap;
+        // push all chaacter into heap, where freq > 0
         for(int i=0; i<26; i++){
-            while(hash[i]>0){
-                index = index >= s.size() ? 1 : index;
-                s[index] = i + 'a';
-                hash[i]--;
-                index += 2;
+            if(freq[i] > 0){
+              Info* temp = new Info(i+'a', freq[i]);
+              maxHeap.push(temp);
             }
         }
-        return s;
+        string ans = "";
+        // loop traverse until each character count==1
+        while(maxHeap.size() > 1){
+            Info* top1 = maxHeap.top();
+            maxHeap.pop();
+            Info* top2 = maxHeap.top();
+            maxHeap.pop();
+
+            ans.push_back(top1->val);
+            top1->count--;
+            ans.push_back(top2->val);
+            top2->count--;
+
+            if(top1->count > 0){
+                maxHeap.push(top1);
+            }else{
+                delete top1;
+            }
+            if(top2->count > 0){
+                maxHeap.push(top2);
+            }else{
+                delete top2;
+            }
+        }
+        // at this stage all character count must be 1
+        if(maxHeap.size() == 1){
+            Info* top = maxHeap.top();
+            maxHeap.pop();
+            
+            ans.push_back(top->val);
+            top->count--;
+
+            if(top->count != 0){
+                // answer not possible
+                delete top;
+                return "";
+            }
+            delete top;
+        }
+        return ans;
     }
 };
