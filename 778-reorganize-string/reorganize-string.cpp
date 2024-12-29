@@ -55,15 +55,13 @@ public:
         if(maxHeap.size() == 1){
             Info* top = maxHeap.top();
             maxHeap.pop();
-            
-            ans.push_back(top->val);
-            top->count--;
 
-            if(top->count != 0){
+            if(top->count > 1){
                 // answer not possible
                 delete top;
                 return "";
             }
+            ans.push_back(top->val);
             delete top;
         }
         return ans;
