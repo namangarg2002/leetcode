@@ -1,6 +1,6 @@
 class Solution {
 public:
-#define ll long long
+    #define ll long long
     long long minimumDifference(vector<int>& nums) {
         int n = nums.size() / 3;
         vector<ll>prefix(nums.size(), -1), suffix(nums.size(), -1);
