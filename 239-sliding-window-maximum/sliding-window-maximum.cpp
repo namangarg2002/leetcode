@@ -1,46 +1,27 @@
 class Solution {
 public:
     vector<int> maxSlidingWindow(vector<int>& nums, int k) {
-        vector<int> ans;
-        deque<int> dq;
+        priority_queue<pair<int, int>> pq; // {val, index}
+        vector<int>ans;
 
-        // Step1: first window process 
+        // consider first window
         for(int i=0; i<k; i++){
-            int element  = nums[i];
-            // jitne bhi queue ke nader chote no. h unhe remove kr do
-            while(!dq.empty() && element > nums[dq.back()]){
-                dq.pop_back();
-            }
-            // now insert karo 
-            dq.push_back(i); 
+            pq.push({nums[i], i});
         }
+        // store max of 1st window
+        ans.push_back(pq.top().first);
 
-        // Step2: remaining window process
-            // removal 1:out of range
-            //         2:Choote element ko remove kr do
-            // addition
+        // consider rest of the window
         for(int i=k; i<nums.size(); i++){
-            // ans store
-            ans.push_back(nums[dq.front()]);
+            pq.push({nums[i], i});
 
-            // removal
-            // out of range
-            if(!dq.empty() && i - dq.front() >= k){
-                dq.pop_front();
+            // remove if maxs are from previous window.
+            while(pq.top().second <= i-k){
+                pq.pop();
             }
-            // chote eleemnt pop krdo
-            int element = nums[i];
-            while(!dq.empty() && element > nums[dq.back()]){
-                dq.pop_back();
-            }
-
-            // addition
-            dq.push_back(i);
-
+            ans.push_back(pq.top().first);
         }
-        // last window ka answer store krlo
-        ans.push_back(nums[dq.front()]);
+        return ans;
 
-        return ans; 
     }
 };
