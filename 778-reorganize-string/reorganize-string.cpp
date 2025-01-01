@@ -11,19 +11,20 @@ public:
         }
     };
     string reorganizeString(string s) {
-        int freq[26] = {0};
+        unordered_map<char, int> freq;
+        // int freq[26] = {0};
 
         // count freq of all character in string
         for(int i=0; i<s.length(); i++){
             char ch = s[i];
-            freq[ch-'a']++;
+            freq[ch]++;
         }
         // push all character in maxHeap
         priority_queue<Info*, vector<Info*>, compare>maxHeap;
         // push all chaacter into heap, where freq > 0
-        for(int i=0; i<26; i++){
+        for(char i='a'; i<='z'; i++){
             if(freq[i] > 0){
-              Info* temp = new Info(i+'a', freq[i]);
+              Info* temp = new Info(i, freq[i]);
               maxHeap.push(temp);
             }
         }
