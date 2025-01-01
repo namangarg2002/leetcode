@@ -9,34 +9,24 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        // unordered_map<ListNode*, bool> table;
-        // ListNode* temp = head;
-        // while(temp != NULL){
-        //     if(table[temp] == false){
-        //         table[temp] = true;
-        //     }else{
-        //         // cycle present
-        //         return true;
-        //     }
-        //     temp = temp->next;
-        // }
-        // // loop not present
-        // return false;
+        unordered_map<ListNode* , bool> mapping;
+        ListNode* temp = head;
 
-        ListNode* slow = head;
-        ListNode* fast = head;
-
-        while(fast != NULL){
-            fast = fast->next;
-            if(fast != NULL){
-                fast = fast->next;
-                slow = slow->next;
-            }
-            // check for loop
-            if(fast == slow){
+        while(temp != NULL){
+            // address check
+            if(mapping.find(temp) != mapping.end()){
+                // cycle present
                 return true;
             }
+            else{
+                // node not visisted beforehead
+                // store
+                mapping[temp] = true;
+            }
+            temp = temp->next;
         }
+        // cycle absent
         return false;
+        
     }
 };
