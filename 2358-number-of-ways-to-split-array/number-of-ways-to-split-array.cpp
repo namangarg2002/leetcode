@@ -2,16 +2,21 @@ class Solution {
 public:
     int waysToSplitArray(vector<int>& nums) {
         int n = nums.size();
-        long long totalSum = accumulate(nums.begin(), nums.end(), 0LL);
-        long long leftSum = 0; 
+        
+        long long sum = 0;
+        for(int &num:nums){
+            sum+=num;
+        }
+        long long leftSum = 0;
+        long long rightSum = 0; 
         int count = 0; 
 
-        for (int i = 0; i < n - 1; ++i) {
+        for (int i = 0; i < n - 1; i++) {
             leftSum += nums[i];
-            long long rightSum = totalSum - leftSum;
+            rightSum = sum - leftSum;
             
             if (leftSum >= rightSum) {
-                ++count;
+                count++;
             }
         }
 
