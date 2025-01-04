@@ -29,14 +29,45 @@ public:
         dp[n] = solveUsingMemoization(n-1, dp) + solveUsingMemoization(n-2, dp);
         return dp[n];
     }
+    int solveUsingTabulation(int n){
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        
+        // Step1: create an dp arry
+        vector<int>dp(n+1, -1);
+
+        // step2: analyse base case and fill dp array
+        dp[0] = 0;
+        dp[1] = 1;
+
+        // step3: fill the remaining array
+        // size = n+1
+        // index-> 0 => n
+        // index fill ho chuka hai -> 0 and 1
+        // bacha kon sa index = 2 => n
+        for(int i=2; i<=n; i++){
+            dp[i] = dp[i-1] + dp[i-2];
+        }
+        return dp[n];
+
+    }
+
+
     int fib(int n) {
         // int ans = solveUsingRecursion(n);
         // return ans;
 
-        // Step1: create dp array;
-        vector<int>dp(n+1, -1);
-        int ans = solveUsingMemoization(n, dp);
+        // // Memoization steps
+        // // Step1: create dp array;
+        // vector<int>dp(n+1, -1);
+        // int ans = solveUsingMemoization(n, dp);
+        // return ans;
+
+        // tabulation Steps
+        int ans = solveUsingTabulation(n);
+
         return ans;
+
     }
 
 };
