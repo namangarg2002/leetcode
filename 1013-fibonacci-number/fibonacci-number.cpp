@@ -65,7 +65,6 @@ public:
             return 0;
         int curr = 1;
         if(n == 1){
-            return 1;
         }
 
         // step3: fill the remaining array
