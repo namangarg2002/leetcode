@@ -32,7 +32,7 @@ public:
     int solveUsingTabulation(int n){
         if (n == 0) return 0;
         if (n == 1) return 1;
-        
+
         // Step1: create an dp arry
         vector<int>dp(n+1, -1);
 
@@ -52,6 +52,38 @@ public:
 
     }
 
+    int solveUsingTabSpaceOptimised(int n){
+        // if (n == 0) return 0;
+        // if (n == 1) return 1;
+        
+        // // Step1: create an dp arry
+        // vector<int>dp(n+1, -1);
+
+        // step2: analyse base case and fill dp array
+        int prev = 0;
+        if(n == 0)
+            return 0;
+        int curr = 1;
+        if(n == 1){
+            return 1;
+        }
+
+        // step3: fill the remaining array
+        // size = n+1
+        // index-> 0 => n
+        // index fill ho chuka hai -> 0 and 1
+        // bacha kon sa index = 2 => n
+
+        int ans; 
+        for(int i=2; i<=n; i++){
+            ans = curr + prev;
+            prev = curr;
+            curr = ans;
+        }
+        return ans;
+
+    }
+
 
     int fib(int n) {
         // int ans = solveUsingRecursion(n);
@@ -63,8 +95,10 @@ public:
         // int ans = solveUsingMemoization(n, dp);
         // return ans;
 
-        // tabulation Steps
-        int ans = solveUsingTabulation(n);
+        // // tabulation Steps
+        // int ans = solveUsingTabulation(n);
+
+        int ans = solveUsingTabSpaceOptimised(n); 
 
         return ans;
 
