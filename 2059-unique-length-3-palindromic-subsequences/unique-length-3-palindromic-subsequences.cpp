@@ -1,30 +1,62 @@
 class Solution {
 public:
     int countPalindromicSubsequence(string s) {
+        // int n = s.length();
+
+        // unordered_set<char>letters;
+        // for(int i=0; i<n; i++){
+        //     letters.insert(s[i]);
+        // }
+        // int result = 0;
+
+        // for(char letter:letters){
+        //     // letter - 'a'
+        //     int leftMostIndex = -1;
+        //     int rightMostIndex = -1;
+
+        //     for(int i=0; i<n; i++){
+        //         if(s[i] == letter){
+        //             if(leftMostIndex == -1){
+        //                 leftMostIndex = i;
+        //             }
+
+        //             rightMostIndex = i;
+        //         }
+        //     }
+        //     unordered_set<char>st;
+        //     for(int i = leftMostIndex+1; i<rightMostIndex; i++){
+        //         st.insert(s[i]);
+        //     }
+        //     result += st.size();
+        // }
+        // return result;
+
         int n = s.length();
 
-        unordered_set<char>letters;
+        vector<pair<int, int>>indices(26, {-1, -1});
+
         for(int i=0; i<n; i++){
-            letters.insert(s[i]);
+            char ch = s[i];
+            int idx = ch - 'a';
+
+            if(indices[idx].first == -1){
+                indices[idx].first = i;
+            }
+            indices[idx].second = i;
         }
+
         int result = 0;
 
-        for(char letter:letters){
-            // letter - 'a'
-            int leftMostIndex = -1;
-            int rightMostIndex = -1;
+        for(int i=0; i<26; i++){
+            int left_idx = indices[i].first;
+            int right_idx = indices[i].second;
 
-            for(int i=0; i<n; i++){
-                if(s[i] == letter){
-                    if(leftMostIndex == -1){
-                        leftMostIndex = i;
-                    }
-
-                    rightMostIndex = i;
-                }
+            if(left_idx == -1 || right_idx == -1){
+                continue;
             }
+
             unordered_set<char>st;
-            for(int i = leftMostIndex+1; i<rightMostIndex; i++){
+            for(int i = left_idx+1; i<right_idx; i++){
                 st.insert(s[i]);
             }
             result += st.size();
