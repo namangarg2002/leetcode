@@ -1,27 +1,37 @@
 class Solution {
 public:
     string shiftingLetters(string s, vector<vector<int>>& shifts) {
+       int n = s.length();
 
-        int n = s.size();
-        vector<int> diff(n + 1, 0);
+       vector<int> diff(n, 0);
+        // Step1: Build the diff array
+        for(auto &query : shifts){
+            int L = query[0];
+            int R = query[1];
+            int dir = (query[2]== 0)? -1 : 1;
 
-        for (const auto& shift : shifts) {
-            int start = shift[0];
-            int end = shift[1];
-            int direction = shift[2];
-            diff[start] += (direction == 1) ? 1 : -1;
-            diff[end + 1] += (direction == 1) ? -1 : 1;
+            diff[L] += dir;
+            if(R+1 < n){
+                diff[R+1] -= dir;
+            }
+
         }
-
-        int netShift = 0;
-        for (int i = 0; i < n; ++i) {
-            netShift += diff[i];
-            int shiftValue = (s[i] - 'a' + netShift) % 26;
-            if (shiftValue < 0) shiftValue += 26; 
-            s[i] = 'a' + shiftValue;
+        // Step2 : Find cummulative sum to find the resultant chnage/shift in the index i
+        for(int i=1; i<n; i++){
+            diff[i] += diff[i-1];
+        }
+        
+        // Now apply the shift/change
+        for(int i=0; i<n; i++){
+            int shift = diff[i] % 26; // handeling out of range
+            if(shift < 0){
+                shift += 26; // warap around
+            }
+            s[i] = (((s[i] - 'a') + shift) % 26) + 'a';
         }
 
         return s;
+
             
     }
 };
