@@ -1,37 +1,67 @@
 class Solution {
 public:
-    int topdown(vector<int>& coins, int amount, vector<int>& dp){
+    // Recurssive Approach
+    int solveUsingRecurssion(vector<int>& coins, int amount){
+        // base case
         if(amount == 0){
             return 0;
         }
-        if(amount < 0){
-            return INT_MAX;
-        }
 
+        // recussive relation
+        int mini = INT_MAX;
+        for(int i=0; i<coins.size(); i++){
+            // find ans using ith coin
+            // call recurssion only for valid amounts i.e., >=0 wale amounts
+            if(amount - coins[i] >= 0){
+                int recurssionKaAns = solveUsingRecurssion(coins, amount-coins[i]);
+                // if a valid ans
+                if(recurssionKaAns != INT_MAX){
+                    // considering usage of ith coin
+                    int ans = 1 + recurssionKaAns;
+                    mini = min(mini, ans);
+                }
+            }
+        }
+        return mini;
+        
+    }
+
+    // Memoization Approach
+    int solveUsingMemoization(vector<int>& coins, int amount, vector<int>&dp){
+        if(amount == 0){
+            return 0;
+        }
         if(dp[amount] != -1){
             return dp[amount];
         }
 
+        // recussive relation
         int mini = INT_MAX;
-
         for(int i=0; i<coins.size(); i++){
-            int ans = topdown(coins, amount-coins[i], dp);
-
-            if(ans != INT_MAX){
-                mini = min(mini, 1+ans);
+            // find ans using ith coin
+            // call recurssion only for valid amounts i.e., >=0 wale amounts
+            if(amount - coins[i] >= 0){
+                int recurssionKaAns = solveUsingMemoization(coins, amount-coins[i], dp);
+                // if a valid ans
+                if(recurssionKaAns != INT_MAX){
+                    // considering usage of ith coin
+                    int ans = 1 + recurssionKaAns;
+                    mini = min(mini, ans);
+                }
             }
         }
         dp[amount] = mini;
         return dp[amount];
-    }
+        
+    } 
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> dp(amount+1, -1);
-        int ans = topdown(coins, amount, dp);
-        if(ans == INT_MAX){
-            return -1;
-        }
-        else{
-            return ans;
-        }
+        // // Recursive Approach
+        // int ans = solveUsingRecurssion(coins, amount);
+
+        // Memoization Approach
+        int n = amount;
+        vector<int>dp(n+1, -1);
+        int ans = solveUsingMemoization(coins, amount, dp);
+        return (ans == INT_MAX) ? -1 : ans;
     }
 };
