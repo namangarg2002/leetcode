@@ -53,6 +53,29 @@ public:
         return dp[0];
     }
 
+    // space optimization
+    int solveUsingSpaceOptimization(vector<int>& nums){
+        int n = nums.size();
+
+        int prev = nums[n-1];
+        int next = 0;
+        int curr = 0;
+        for(int index=n-2; index>=0; index--){
+            int tempAns = 0;
+            if(index + 2 < n){
+                tempAns = next;
+            }
+            int include = nums[index] + tempAns;
+            int exclude = 0 + prev;
+            curr = max(include, exclude);
+
+            // imp step 
+            next = prev;
+            prev = curr;
+        }
+        return prev;
+    }
+
     int rob(vector<int>& nums) {
         // from L->R direction
 
@@ -66,8 +89,11 @@ public:
         // vector<int>dp(n+1, -1);
         // int ans = solveUsingMemoization(nums, index, dp);
 
-        // solve using tabulation
-        int ans = solveUsingTabulation(nums);
+        // // solve using tabulation
+        // int ans = solveUsingTabulation(nums);
+
+        // solve using space optimization
+        int ans = solveUsingSpaceOptimization(nums);
 
         return ans;
     }
