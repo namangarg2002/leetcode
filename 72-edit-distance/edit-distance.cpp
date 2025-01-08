@@ -53,38 +53,6 @@ public:
     }
 
     int solveUsingTabulation(string &a, string &b){
-        vector<int>curr(a.length()+1, 0);
-        vector<int>next(a.length()+1, 0);
-
-        // // base case analyse
-        // for(int col=0; col<=b.length(); col++){
-        //     curr[col] = b.length()-col;
-        // }
-        for(int row=0; row<=a.length(); row++){
-            next[row] = a.length()-row;
-        }
-        for(int j_index=b.length()-1; j_index>=0; j_index--){
-            for(int i_index=a.length()-1; i_index>=0; i_index--){
-                int ans = 0;
-                if(a[i_index] == b[j_index]){
-                    ans = 0 + next[i_index+1];
-                }else{
-                    int replace = 1 + next[i_index+1];
-                    int insert = 1 + next[i_index];
-                    int remove = 1 + curr[i_index+1];
-
-                    ans = min(replace, min(insert, remove));
-                }
-
-                curr[i_index] = ans;
-            }
-            next = curr;
-        }
-        return next[0];
-
-    }
-
-    int solveUsingTabulationSpaceOptimization(string &a, string &b){
         vector<vector<int>>dp(a.length()+1, vector<int>(b.length()+1, -1));
 
         // base case analyse
@@ -112,7 +80,39 @@ public:
             }
         }
         return dp[0][0];
+    }
 
+    int solveUsingTabulationSpaceOptimization(string &a, string &b){
+        vector<int>curr(a.length()+1, 0);
+        vector<int>next(a.length()+1, 0);
+
+        // // base case analyse
+        // for(int col=0; col<=b.length(); col++){
+        //     curr[col] = b.length()-col;
+        // }
+        for(int row=0; row<=a.length(); row++){
+            next[row] = a.length()-row;
+        }
+        for(int j_index=b.length()-1; j_index>=0; j_index--){
+            // har naye column ke last dabbe me answer insert kardo
+            curr[a.length()] = b.length()-j_index;
+            for(int i_index=a.length()-1; i_index>=0; i_index--){
+                int ans = 0;
+                if(a[i_index] == b[j_index]){
+                    ans = 0 + next[i_index+1];
+                }else{
+                    int replace = 1 + next[i_index+1];
+                    int insert = 1 + next[i_index];
+                    int remove = 1 + curr[i_index+1];
+
+                    ans = min(replace, min(insert, remove));
+                }
+
+                curr[i_index] = ans;
+            }
+            next = curr;
+        }
+        return next[0];
     }
 
     int minDistance(string word1, string word2) {
