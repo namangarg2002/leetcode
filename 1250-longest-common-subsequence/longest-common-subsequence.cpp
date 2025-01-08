@@ -62,7 +62,7 @@ public:
 
     }
 
-    int longestCommonSubsequence(string text1, string text2) {
+    int longestCommonSubsequence(string &text1, string &text2) {
         // // recursive approach
         // int i=0;
         // int j=0;
