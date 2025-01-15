@@ -75,11 +75,32 @@ public:
                         ans = max(curr[i_index+1], next[i_index]);
                     }
                     curr[i_index] = ans;
-                }
-                // shifting
-                next = curr;
             }
-            return next[0];
+            // shifting
+            next = curr;
+        }
+        return next[0];
+    }
+
+    int solveUsingSpaceOptimizationNoLoopChange(string a, string b){
+        vector<int>curr(b.length()+1, 0);
+        vector<int>next(b.length()+1, 0);
+
+        for(int i_index=a.length()-1; i_index>=0; i_index--){
+            for(int j_index=b.length()-1; j_index>=0; j_index--){
+                int ans = 0;
+                if(a[i_index] == b[j_index]){
+                    ans = 1 + next[j_index+1];
+                }else{
+                    ans = max(next[j_index], curr[j_index+1]);
+                }
+
+                curr[j_index] = ans;
+            }
+            next = curr;
+        }
+
+        return next[0];
     }
 
     int longestCommonSubsequence(string text1, string text2) {
@@ -96,7 +117,7 @@ public:
         // int ans = solveUsingTabulation(text1, text2, 0, 0);
 
         // Space Optimization Approach
-        int ans = solveUsingSpaceOptimization(text1, text2);
+        int ans = solveUsingSpaceOptimizationNoLoopChange(text1, text2);
 
         return ans;
     }
