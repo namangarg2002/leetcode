@@ -75,6 +75,24 @@ public:
         }
         return next[0];
     }
+
+    int solveUsingBS(vector<int>& nums){
+       vector<int>ans;
+       // initial State 
+       ans.push_back(nums[0]);
+
+       for(int i=1; i<nums.size(); i++){
+            if(nums[i] > ans.back()){
+                ans.push_back(nums[i]);
+            }else{
+                // just bada number exist karta hai
+                int index = lower_bound(ans.begin(), ans.end(), nums[i]) - ans.begin();
+                // replace
+                ans[index] = nums[i];
+            }
+       }
+       return ans.size();
+    }
     int lengthOfLIS(vector<int>& nums) {
 
         // // Recusive Approach
@@ -92,9 +110,11 @@ public:
         // // Tabulation Method
         // int ans = solveUsingTabulation(nums);
 
-        // Space Optimization 
-        int ans = solveUsingTabulationSpaceOptimization(nums);
+        // // Space Optimization 
+        // int ans = solveUsingTabulationSpaceOptimization(nums);
 
+        // Dp eith binaty search
+        int ans = solveUsingBS(nums);
         return ans;
     }
 };
