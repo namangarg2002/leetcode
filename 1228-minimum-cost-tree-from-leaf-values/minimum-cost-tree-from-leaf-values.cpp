@@ -30,6 +30,27 @@ public:
 
         return dp[s][e];
     }
+
+    int solveUsingTabulation(vector<int>& arr, map<pair<int,int>, int> &maxi){
+        int n = arr.size();
+        vector<vector<int>>dp(n+1, vector<int>(n+1, 0)); 
+
+        for(int s_index=n-1; s_index>=0; s_index--){
+            for(int e_index=0; e_index<=n-1; e_index++){
+                if(s_index >= e_index){
+                    continue;
+                }
+                int ans = INT_MAX;
+                for(int i=s_index; i<e_index; i++){
+                    ans = min(ans, maxi[{s_index, i}]*maxi[{i+1, e_index}] + dp[s_index][i] + dp[i+1][e_index]);
+                }
+                dp[s_index][e_index] = ans;
+
+            }
+        }
+        return dp[0][n-1];
+
+    }
     int mctFromLeafValues(vector<int>& arr) {
         int n = arr.size();
         // precomputation
@@ -45,11 +66,14 @@ public:
         // int end = n - 1;
         // int ans = solveUsingRecursion(arr, maxi, start, end);
 
-        // Memoization Approach
-        int start = 0;
-        int end = n-1;
-        vector<vector<int>>dp(n+1, vector<int>(n+1, -1)); 
-        int ans = solveUsingMemoization(arr, maxi, start, end, dp);
+        // // Memoization Approach
+        // int start = 0;
+        // int end = n-1;
+        // vector<vector<int>>dp(n+1, vector<int>(n+1, -1)); 
+        // int ans = solveUsingMemoization(arr, maxi, start, end, dp);
+
+        // Tabulation Approach
+        int ans = solveUsingTabulation(arr, maxi);
 
         return ans;
     }
