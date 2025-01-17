@@ -67,6 +67,28 @@ public:
         return dp[n][target];
     }
 
+    int solveUsingSo(int n, int k, int target){
+        vector<int>prev(target+1, 0);
+        vector<int>curr(target+1, 0);
+
+        prev[0] = 1;
+
+        for(int diceUsed=1; diceUsed<=n; diceUsed++){
+            for(int currSum=0; currSum<=target; currSum++){
+                int ans = 0;
+                for(int face=1; face<=k; face++){
+                    if(currSum - face >= 0){
+                        ans = (ans + prev[currSum-face]) % mod;
+                    }
+                }
+                curr[currSum] = ans;
+            }
+            prev = curr;
+        }
+
+        return prev[target];
+    }
+
     int numRollsToTarget(int n, int k, int target) {
         // // Recursive Approach
         // int ans = solveUsingRecursion(n, k, target);
@@ -75,8 +97,11 @@ public:
         // vector<vector<int>>dp(n+1, vector<int>(target+1, -1));
         // int ans = solveUsingMemoiation(n, k, target, dp);
 
-        // Tabulation Approach
-        int ans = solveUsingTabulation(n, k, target);
+        // // Tabulation Approach
+        // int ans = solveUsingTabulation(n, k, target);
+
+        // space optimization
+        int ans = solveUsingSo(n, k, target);
 
         return ans;
     }
