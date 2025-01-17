@@ -38,11 +38,34 @@ public:
         int include = solveUsingMemoiation(nums, index+1, sum+nums[index], target, dp);
         int exclude = solveUsingMemoiation(nums, index+1, sum, target, dp);
 
-        int ans = include|exclude;
+        int ans = include||exclude;
 
         dp[index][sum] = ans;
 
         return dp[index][sum];
+    }
+
+    bool solveUsingTabulation(vector<int>& nums, int &target){
+        int n = nums.size();
+        vector<vector<int>>dp(n+2, vector<int>(target+1, 0));
+
+        for(int row=0; row<=n; row++){
+            dp[row][target] = 1;
+        }
+
+        for(int index=n-1; index>=0; index--){
+            for(int sum=target; sum>=0; sum--){
+                int include = 0;
+                if(sum + nums[index] <= target){
+                    include = dp[index+1][sum+nums[index]];
+                }
+                int exclude = dp[index+1][sum];
+
+                dp[index][sum] = (include||exclude);
+            }
+        }
+
+        return dp[0][0];
     }
     bool canPartition(vector<int>& nums) {
         int index = 0;
@@ -62,9 +85,14 @@ public:
         // // // Recursive Approach
         // bool ans = solveUsingRecursion(nums, index, currSum, target);
 
-        // memoization
-        vector<vector<int>>dp(n+1, vector<int>(target+1, -1));
-        bool ans = solveUsingMemoiation(nums, index, currSum, target, dp);
+        // // memoization
+        // vector<vector<int>>dp(n+1, vector<int>(target+1, -1));
+        // bool ans = solveUsingMemoiation(nums, index, currSum, target, dp);
+
+        // Tabulation Approach
+
+        bool ans = solveUsingTabulation(nums, target);
+
         return ans;
     }
 };
