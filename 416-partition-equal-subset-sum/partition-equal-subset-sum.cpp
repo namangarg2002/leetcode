@@ -67,6 +67,36 @@ public:
 
         return dp[0][0];
     }
+
+    bool solveUsingTabulationSO(vector<int>& nums, int &target){
+        int n = nums.size();
+
+        // vector<vector<int>>dp(n+2, vector<int>(target+1, 0));
+        vector<int>curr(target+1, 0);
+        vector<int>next(target+1, 0);
+
+        // for(int row=0; row<=n; row++){
+        //     dp[row][target] = 1;
+        // }
+        curr[target] = 1;
+        next[target] = 1;
+
+        for(int index=n-1; index>=0; index--){
+            for(int sum=target; sum>=0; sum--){
+                int include = 0;
+                if(sum + nums[index] <= target){
+                    include = next[sum+nums[index]];
+                }
+                int exclude = next[sum];
+
+                curr[sum] = (include||exclude);
+            }
+            next = curr;
+        }
+
+        return next[0];
+    }
+    
     bool canPartition(vector<int>& nums) {
         int index = 0;
         int totalSum = 0;
@@ -89,9 +119,11 @@ public:
         // vector<vector<int>>dp(n+1, vector<int>(target+1, -1));
         // bool ans = solveUsingMemoiation(nums, index, currSum, target, dp);
 
-        // Tabulation Approach
+        // // Tabulation Approach
+        // bool ans = solveUsingTabulation(nums, target);
 
-        bool ans = solveUsingTabulation(nums, target);
+        // Space Optimizaion Approach
+        bool ans = solveUsingTabulationSO(nums, target);
 
         return ans;
     }
