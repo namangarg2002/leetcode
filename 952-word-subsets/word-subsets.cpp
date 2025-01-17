@@ -1,41 +1,40 @@
 class Solution {
 public:
-    unordered_map<char, int> countFrequency(const string& str) {
-    unordered_map<char, int> freq;
-    for (char ch : str) {
-        freq[ch]++;
-    }
-    return freq;
-    }
-    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
-    unordered_map<char, int> maxFreq;
-    for (const string& word : words2) {
-        unordered_map<char, int> wordFreq = countFrequency(word);
-        for (const auto& entry : wordFreq) {
-            maxFreq[entry.first] = max(maxFreq[entry.first], entry.second);
-        }
-    }
-    
-    // Step 2: Check each word in words1
-    vector<string> result;
-    for (const string& word : words1) {
-        unordered_map<char, int> wordFreq = countFrequency(word);
-        bool isUniversal = true;
-        
-        // Step 3: Check if the word satisfies the conditions
-        for (const auto& entry : maxFreq) {
-            if (wordFreq[entry.first] < entry.second) {
-                isUniversal = false;
-                break;
+    bool isSubset(vector<int>& freq2, vector<int>& temp){
+        for(int i=0; i<26; i++){
+            if(temp[i] < freq2[i]){
+                return false;
             }
         }
-        
-        // If it satisfies, add it to the result
-        if (isUniversal) {
-            result.push_back(word);
-        }
+        return true;
     }
-    return result;
-            
+    vector<string> wordSubsets(vector<string>& words1, vector<string>& words2) {
+        vector<string> result;
+
+        // step1: fill max reqired for character
+        vector<int>freq2(26);
+        for(auto&word: words2){
+            int temp[26] = {0}; // or vector<int> temp(26, 0)
+
+            for(auto&ch:word){
+                temp[ch-'a']++;
+
+                freq2[ch-'a'] = max(freq2[ch-'a'], temp[ch-'a']);
+            }
+        }
+
+        // step2: 
+        for(auto&word:words1){
+            vector<int> temp(26, 0);
+            for(auto&ch:word){
+                temp[ch-'a']++;  
+            }
+
+            if(isSubset(freq2, temp)){
+                result.push_back(word);
+            }
+        }
+
+        return result;
     }
 };
