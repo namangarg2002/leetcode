@@ -1,20 +1,25 @@
 class Solution {
 public:
     bool canConstruct(string s, int k) {
-        if (k > s.length()) return false;
+        if(s.length() == k){
+            return true;
+        }
+        if(s.length() < k){
+            return false;
+        }
 
-        unordered_map<char, int> freq;
-        for (char c : s) {
-            freq[c]++;
+        vector<int>vec(26, 0);
+        for(auto&ch:s){
+            vec[ch-'a']++;
         }
 
         int oddCount = 0;
-        for (auto& entry : freq) {
-            if (entry.second % 2 != 0) {
+        for(int i=0; i<26; i++){
+            if(vec[i] & 1){
                 oddCount++;
             }
         }
 
-        return oddCount <= k; 
+        return (oddCount <= k) ? true : false;
     }
 };
