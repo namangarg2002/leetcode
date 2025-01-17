@@ -40,7 +40,7 @@ public:
             openClose.pop();
         }
 
-        return (open.empty());
+        return (open.empty()) ? true : false;
 
     }
 };
