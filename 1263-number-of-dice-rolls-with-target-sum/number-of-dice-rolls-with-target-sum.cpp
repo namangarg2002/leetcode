@@ -67,7 +67,7 @@ public:
         return dp[n][target];
     }
 
-    int solveUsingSo(int n, int k, int target){
+    int solveUsingSo(int n, int &k, int target){
         vector<int>prev(target+1, 0);
         vector<int>curr(target+1, 0);
 
