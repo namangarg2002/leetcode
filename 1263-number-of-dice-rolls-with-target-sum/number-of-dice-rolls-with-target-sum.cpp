@@ -47,7 +47,7 @@ public:
         return dp[n][target];
     }
 
-    int solveUsingTabulation(int n, int &k, int target){
+    int solveUsingTabulation(int n, int k, int target){
         vector<vector<int>>dp(n+1, vector<int>(target+1, 0));
 
         dp[0][0] = 1;
