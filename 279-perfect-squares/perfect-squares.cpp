@@ -34,7 +34,7 @@ public:
             int end = sqrt(n);
             while(start<=end){
                 int perfectSquare = start * start;
-                int numberofPerfectSquare = 1 + numSquareHelper(n-perfectSquare, dp);
+                int numberofPerfectSquare = 1 + dp[start-perfectSquare];
                 if(numberofPerfectSquare < ans){
                     ans = numberofPerfectSquare;
                 }
