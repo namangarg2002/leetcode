@@ -31,8 +31,38 @@ public:
         }
         return ans;
     }
+    vector<TreeNode*> allPossibleBSTMem(int start, int end, vector<vector<vector<TreeNode*>>>& dp){
+        // Base Case
+        if(start > end) return {nullptr};
+        if(start == end) return {new TreeNode(start)};
+
+        if(!dp[start][end].empty()){
+            return dp[start][end];
+        }
+        vector<TreeNode*>ans;
+        for(int i=start; i<=end; i++){
+            vector<TreeNode*> left = allPossibleBSTMem(start, i-1, dp);
+            vector<TreeNode*> right = allPossibleBSTMem(i+1, end, dp); 
+
+            for(int j=0; j<left.size(); j++){
+                for(int k=0; k<right.size(); k++){
+                    TreeNode*root = new TreeNode(i);
+                    root->left = left[j];
+                    root->right = right[k];
+                    ans.push_back(root);
+                }
+            }
+        }
+        dp[start][end] = ans;
+        return dp[start][end];
+    }
     vector<TreeNode*> generateTrees(int n) {
         if(n==0) return {};
-        return allPossibleBST(1, n);
+        // // Recursive Approach
+        // return allPossibleBST(1, n);
+
+        // Memoiation Aproach
+        vector<vector<vector<TreeNode*>>> dp(n + 1, vector<vector<TreeNode*>>(n + 1));
+        return allPossibleBSTMem(1, n, dp);
     }
 };
