@@ -22,7 +22,7 @@ public:
         
         return dp[i][j];
     }
-    long long solveTab(string &s, string &t) {
+    int solveTab(string &s, string &t) {
         vector<vector<int>> dp(s.size() + 1, vector<int>(t.size() + 1, 0));
 
         for (int i = 0; i <= s.size(); i++) {  
