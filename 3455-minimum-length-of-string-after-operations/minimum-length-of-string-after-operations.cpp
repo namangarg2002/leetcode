@@ -1,20 +1,20 @@
 class Solution {
 public:
     int minimumLength(string s) {
-        unordered_map<char, int>mp;
+        vector<int> freq(26, 0);
         for(const auto&ch:s){
-            mp[ch]++;
+            freq[ch - 'a']++;
         }
+        
         int count = 0;
-        for(const auto&pair:mp){
-            if(pair.second & 1){
+        for (int i = 0; i < freq.size(); i++) {
+            if (freq[i] % 2 == 0  && freq[i] > 0) {
                 // odd case
-                count += 1;
-            }else{
                 count += 2;
+            }else if (freq[i] % 2 == 1){
+                count += 1;
             }
         }
-
         return count;
     }
 };
