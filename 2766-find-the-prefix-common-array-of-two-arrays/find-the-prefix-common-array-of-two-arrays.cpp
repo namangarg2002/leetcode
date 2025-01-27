@@ -4,18 +4,21 @@ public:
         int n = A.size();
 
         vector<int>result(n);
+        vector<bool> isPresentA(n+1, false);
+        vector<bool> isPresentB(n+1, false);
+
         for(int i=0; i<n; i++){
+            isPresentA[A[i]] = true;
+            isPresentB[B[i]] = true;
             int count = 0;
-            for(int A_i=0; A_i<=i; A_i++){
-                for(int B_i=0; B_i<=i; B_i++){
-                    if(B[B_i]==A[A_i]){
-                        count++;
-                        break;
-                    }
+            for(int i=1; i<=n; i++){
+                if(isPresentA[i] == true && isPresentB[i] == true){
+                    count++;
                 }
             }
-            result[i] = count; 
-        } 
+
+            result[i] = count;
+        }
         return result; 
     }
 };
