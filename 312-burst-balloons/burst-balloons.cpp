@@ -24,6 +24,21 @@ public:
 
         return dp[s][e];
     }
+    int solveTab(vector<int>& nums){
+        vector<vector<int>>dp(nums.size(), vector<int>(nums.size(), 0));
+
+        for(int s=nums.size()-2; s>=1; s--){
+            for(int e=1; e<=nums.size()-2; e++){
+                long long coins = LLONG_MIN;
+                for(int i=s; i<=e; i++){
+                    coins = max(coins, 1LL*nums[s-1]*nums[i]*nums[e+1] + dp[s][i-1] + dp[i+1][e]);
+
+                }
+                dp[s][e] = coins;
+            }
+        }
+        return dp[1][nums.size()-2];
+    }
     int maxCoins(vector<int>& nums) {
         nums.insert(nums.begin(), 1);
         nums.insert(nums.end(), 1);
@@ -34,8 +49,11 @@ public:
         // // Recursive Approach
         // return solveRE(nums, start, end);
 
-        // Memoiation Approch
-        vector<vector<int>>dp(nums.size(), vector<int>(nums.size(), -1));
-        return solveMem(nums, start, end, dp);
+        // // Memoiation Approch
+        // vector<vector<int>>dp(nums.size(), vector<int>(nums.size(), -1));
+        // return solveMem(nums, start, end, dp);
+
+        // TabulationApproach
+        return solveTab(nums);
     }
 };
