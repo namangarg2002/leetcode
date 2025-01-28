@@ -36,12 +36,36 @@ public:
         }
         return dp[i][buy][limit] = profit;
     }
+    int solveTab(vector<int>& prices, int &k){
+        vector<vector<vector<int>>> dp(prices.size()+1, vector<vector<int>>(2, vector<int>(k+1, 0)));
+        for(int i=prices.size()-1; i>=0; i--){
+            for(int buy=0; buy<=1; buy++){
+                for(int limit=1; limit<=k; limit++){
+                    int profit = 0;
+                    if(buy){
+                        int buyItProfit = dp[i+1][0][limit] + (-prices[i]);
+                        int skipProfit = dp[i+1][1][limit];
+                        profit = max(buyItProfit, skipProfit);
+                    }else{
+                        int sellItProfit = prices[i] + dp[i+1][1][limit-1];
+                        int skipProfit = dp[i+1][0][limit];
+                        profit = max(sellItProfit, skipProfit);
+                    }
+                    dp[i][buy][limit] = profit;
+                }
+            }
+        }
+        return dp[0][1][k];
+    }
     int maxProfit(int k, vector<int>& prices) {
         // // Recursive Approach
         // return solveRE(prices, 0, true, k);
 
-        // memoiation Approach
-        vector<vector<vector<int>>> dp(prices.size()+1, vector<vector<int>>(2, vector<int>(k+1, -1)));
-        return solveMem(prices, 0, true, k, dp);
+        // // memoiation Approach
+        // vector<vector<vector<int>>> dp(prices.size()+1, vector<vector<int>>(2, vector<int>(k+1, -1)));
+        // return solveMem(prices, 0, true, k, dp);
+
+         // Tabulation Approach
+        return solveTab(prices, k);
     }
 };
