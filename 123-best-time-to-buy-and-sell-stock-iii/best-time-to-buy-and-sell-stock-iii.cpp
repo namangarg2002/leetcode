@@ -37,12 +37,46 @@ public:
         }
         return dp[i][buy][limit] = profit;
     }
+    int solveTab(vector<int>& prices){
+        vector<vector<vector<int>>> dp(prices.size()+1, vector<vector<int>>(2, vector<int>(3, 0)));
+        for(int i=prices.size()-1; i>=0; i--){
+            for(int buy=0; buy<=1; buy++){
+                for(int limit=1; limit<=2; limit++){
+                    int profit = 0;
+                    if(buy){
+                        int buyItProfit = dp[i+1][0][limit] + (-prices[i]);
+                        int skipProfit = dp[i+1][1][limit];
+                        profit = max(buyItProfit, skipProfit);
+                    }else{
+                        int sellItProfit = prices[i] + dp[i+1][1][limit-1];
+                        int skipProfit = dp[i+1][0][limit];
+                        profit = max(sellItProfit, skipProfit);
+                    }
+                    dp[i][buy][limit] = profit;
+                }
+            }
+        }
+        return dp[0][1][2];
+    }
+    // int solveTabSO(vector<int>& prices){
+    //     vector<vector<int>>curr(2, vector<int>(3, 0));
+    //     vector<vector<int>>next(2, vector<int>(3, 0));
+
+        
+
+    // }
     int maxProfit(vector<int>& prices) {
         // // Recursive Approach
         // return solveRE(prices, 0, true, 2);
 
-        // memoiation Approach
-        vector<vector<vector<int>>> dp(prices.size()+1, vector<vector<int>>(2, vector<int>(3, -1)));
-        return solveMem(prices, 0, true, 2, dp);
+        // // memoiation Approach
+        // vector<vector<vector<int>>> dp(prices.size()+1, vector<vector<int>>(2, vector<int>(3, -1)));
+        // return solveMem(prices, 0, true, 2, dp);
+
+        // Tabulation Approach
+        return solveTab(prices);
+
+        // // space optimised Approach
+        // return solveTabSO(prices);
     }
 };
