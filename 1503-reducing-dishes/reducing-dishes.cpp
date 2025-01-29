@@ -31,6 +31,21 @@ public:
         }
         return dp[0][1];
     }
+    int solveTabSO(vector<int>& sat){
+        vector<int>curr(sat.size()+2, 0);
+        vector<int>next(sat.size()+2, 0);
+
+        for(int i=sat.size()-1; i>=0; i--){
+            for(int time=sat.size(); time>=1; time--){
+                int include = time*sat[i] + next[time+1];
+                int exclude = 0 + next[time];
+
+                curr[time] = max(include, exclude);
+            }
+            next = curr;
+        }
+        return next[1];
+    }
     int maxSatisfaction(vector<int>& satisfaction) {
 
         sort(satisfaction.begin(), satisfaction.end()); 
@@ -42,7 +57,10 @@ public:
         // vector<vector<int>>dp(satisfaction.size()+1, vector<int>(satisfaction.size()+1, -1));
         // return solveMem(satisfaction, 0, 1, dp);
 
-        // Tabulation Approach
-        return solveTab(satisfaction);
+        // // Tabulation Approach
+        // return solveTab(satisfaction);
+
+        // Space optimization
+        return solveTabSO(satisfaction);
     }
 };
