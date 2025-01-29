@@ -50,6 +50,29 @@ public:
         }
         return dp[1][0];
     }
+    int solveTabSO(vector<int>& nums1, vector<int>& nums2){
+        vector<int>curr(2, 0);
+        vector<int>next(2, 0);
+
+        for(int i=nums1.size()-1; i>=1; i--){
+            for(int isSwap=1; isSwap>=0; isSwap--){
+                int prev1 = nums1[i-1], prev2 = nums2[i-1];
+                if(isSwap){
+                    swap(prev1, prev2);
+                }
+                int swap = INT_MAX, noswap = INT_MAX;
+                if(prev1 < nums2[i] && prev2 < nums1[i]){
+                    swap = 1 + next[1];
+                }
+                if(prev1 < nums1[i] && prev2 < nums2[i]){
+                    noswap = 0 + next[0];
+                }
+                curr[isSwap] = min(swap, noswap);
+            }
+            next = curr;
+        }
+        return next[0];
+    }
     int minSwap(vector<int>& nums1, vector<int>& nums2) {
         // // recursive Approach
         // return solveRE(nums1, nums2, 0, -1, -1);
@@ -58,9 +81,14 @@ public:
         // vector<vector<int>>dp(nums1.size(), vector<int>(2, -1));
         // return solveMem(nums1, nums2, 0, -1, -1, dp, 0);
 
-        // tabulation Approach
+        // // tabulation Approach
+        // nums1.insert(nums1.begin(), -1);
+        // nums2.insert(nums2.begin(), -1);
+        // return solveTab(nums1, nums2);
+
+        // Space optimization
         nums1.insert(nums1.begin(), -1);
         nums2.insert(nums2.begin(), -1);
-        return solveTab(nums1, nums2);
+        return solveTabSO(nums1, nums2);
     }
 };
