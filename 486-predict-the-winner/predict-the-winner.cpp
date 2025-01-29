@@ -19,11 +19,34 @@ public:
 
         return dp[start][end] = max(diffByStart, diffByEnd);
     }
+    int solveTab(vector<int>& nums){
+        vector<vector<int>>dp(nums.size(), vector<int>(nums.size(), 0));
+        // base case
+        for (int i = 0; i < nums.size(); i++) {
+            dp[i][i] = nums[i];
+        }
+
+        for(int len = 2; len <= nums.size(); len++){
+            for(int start = 0; start <= nums.size() - len; start++) {
+                int end = start + len - 1;
+                int diffByStart = nums[start] - dp[start+1][end];
+                int diffByEnd = nums[end] - dp[start][end-1];
+
+                dp[start][end] = max(diffByStart, diffByEnd);
+            }
+        }
+        return dp[0][nums.size()-1];
+    }
     bool predictTheWinner(vector<int>& nums) {
         // // Recursive Approach
         // int ans = solveRE(nums, 0, nums.size()-1);
-        vector<vector<int>>dp(nums.size(), vector<int>(nums.size()+1, -1));
-        int ans = solveMem(nums, 0, nums.size()-1, dp);
+
+        // // Memoiation Approach
+        // vector<vector<int>>dp(nums.size(), vector<int>(nums.size()+1, -1));
+        // int ans = solveMem(nums, 0, nums.size()-1, dp);
+
+        // tabulation approach
+        int ans = solveTab(nums);
 
         return (ans >=0) ? true: false;
     }
