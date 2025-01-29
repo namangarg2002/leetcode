@@ -37,6 +37,27 @@ public:
         }
         return dp[0][nums.size()-1];
     }
+    int solveTabSO(vector<int>& nums){
+        vector<int>curr(nums.size(), 0);
+        vector<int>next(nums.size(), 0);
+
+        // base case
+        for (int i = 0; i < nums.size(); i++) {
+            next[i] = nums[i];
+        }
+
+        for(int len = 2; len <= nums.size(); len++){
+            for(int start = 0; start <= nums.size() - len; start++) {
+                int end = start + len - 1;
+                int diffByStart = nums[start] - next[end];
+                int diffByEnd = nums[end] - next[end-1];
+
+                curr[end] = max(diffByStart, diffByEnd);
+            }
+            next = curr;
+        }
+        return curr[nums.size()-1];
+    }
     bool predictTheWinner(vector<int>& nums) {
         // // Recursive Approach
         // int ans = solveRE(nums, 0, nums.size()-1);
@@ -45,8 +66,11 @@ public:
         // vector<vector<int>>dp(nums.size(), vector<int>(nums.size()+1, -1));
         // int ans = solveMem(nums, 0, nums.size()-1, dp);
 
-        // tabulation approach
-        int ans = solveTab(nums);
+        // // tabulation approach
+        // int ans = solveTab(nums);
+
+        // Space optimization
+        int ans = solveTabSO(nums);
 
         return (ans >=0) ? true: false;
     }
