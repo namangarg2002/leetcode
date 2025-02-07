@@ -10,7 +10,7 @@ public:
         return false;
     }
     int makeConnected(int n, vector<vector<int>>& connections) {
-        if(connections.size() < n -1){
+        if(connections.size() < n-1){
             return -1;
         }
         unordered_map<int, vector<int>> adj;
