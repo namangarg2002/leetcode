@@ -21,7 +21,7 @@ public:
             if(sum == target){
                 ans.push_back(temp[s].second);
                 ans.push_back(temp[e].second);
-                return ans;
+                // return ans;
             }
             if(sum < target){
                 s++;
