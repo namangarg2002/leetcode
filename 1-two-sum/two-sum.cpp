@@ -5,8 +5,7 @@ public:
         for(int i=0; i<nums.size(); i++){
             int index = i;
             int value = nums[i];
-            pair<int, int>p = make_pair(value, index);
-            temp.push_back(p);
+            temp.push_back({value, i});
         }
         // ṣort basis on value
         sort(temp.begin(), temp.end());
@@ -21,7 +20,6 @@ public:
             if(sum == target){
                 ans.push_back(temp[s].second);
                 ans.push_back(temp[e].second);
-                // return ans;
             }
             if(sum < target){
                 s++;
