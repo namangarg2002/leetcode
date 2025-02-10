@@ -17,9 +17,8 @@ public:
     bool isSafe(int row, int col, vector<vector<char>> board){
         if(rowCheck[row] != true && topDiagonal[col-row] != true && bottomDiagonal[row+col] != true){
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
     void solve(vector<vector<char>> &board, vector<vector<string>> &ans, int n, int col){
         // base case
