@@ -15,10 +15,17 @@ public:
         ans.push_back(tempSol);
     }
     bool isSafe(int row, int col, vector<vector<char>> board){
-        if(rowCheck[row] != true && topDiagonal[col-row] != true && bottomDiagonal[row+col] != true){
-            return true;
+        if(rowCheck[row] == true){
+            return false;
         }
-        return false;
+        if(topDiagonal[col-row] == true){
+            return false;
+        }
+        if(bottomDiagonal[row+col] == true){
+            return false;
+        }
+
+        return true;
     }
     void solve(vector<vector<char>> &board, vector<vector<string>> &ans, int n, int col){
         // base case
