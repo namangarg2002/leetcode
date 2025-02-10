@@ -1,50 +1,79 @@
 class Solution {
 public:
-    void solve(string& s,unordered_set<string>&ans, int invalidOpen, int invalidClose, int balance, int index, string &output){
+    void solve(string& s,unordered_set<string>&ans, int open, int close, int bal, int index, string &output){
+        // if(index >= s.length()){
+        //     // valid answer
+        //     if(invalidOpen == 0 && invalidClose == 0 && balance == 0){
+        //         ans.insert(output);
+        //     }
+        //     return;
+        // }
+        // // // include/exclude
+        // // letter wala case
+        // if(s[index] != '(' && s[index] != ')'){
+        //     output.push_back(s[index]);
+        //     solve(s, ans, invalidOpen, invalidClose, balance, index+1, output);
+        //     output.pop_back();
+        // }else{
+        //     // brackets
+        //     // 2 case -> ( and )
+        //     // open Bracket
+        //     if(s[index] == '('){
+        //         // include / exclude
+        //         // remove karu
+        //         if(invalidOpen > 0){
+        //             solve(s, ans, invalidOpen-1, invalidClose, balance, index+1, output);
+        //         }
+        //         // remove na Karu
+        //         output.push_back('(');
+        //         solve(s, ans,invalidOpen, invalidClose, balance+1, index+1, output);
+        //         output.pop_back();
+
+        //     }else if(s[index] == ')'){
+        //         // remove karu
+        //         if(invalidClose > 0){
+        //             solve(s, ans, invalidOpen, invalidClose-1, balance, index+1, output);
+        //         }
+        //         // remove na karu
+        //         // ap ek clode bracket pr khade ho, and previously koi nhi open bracket present nhi hai
+        //         // toh kya mai ise remove na kru ?
+        //         if(balance > 0){
+        //             // koi nakoi opening brachet present hai
+        //             output.push_back(')');
+        //             solve(s, ans, invalidOpen, invalidClose, balance-1, index+1, output);
+        //             output.pop_back();
+        //         }
+        //     }
+        // }
         if(index >= s.length()){
-            // valid answer
-            if(invalidOpen == 0 && invalidClose == 0 && balance == 0){
+            if(open == 0 && close == 0 && bal == 0){
                 ans.insert(output);
             }
             return;
         }
-        // // include/exclude
-        // letter wala case
+        // letter case
         if(s[index] != '(' && s[index] != ')'){
             output.push_back(s[index]);
-            solve(s, ans, invalidOpen, invalidClose, balance, index+1, output);
+            solve(s, ans, open, close, bal, index+1, output);
             output.pop_back();
         }else{
-            // brackets
-            // 2 case -> ( and )
-            // open Bracket
-            if(s[index] == '('){
-                // include / exclude
-                // remove karu
-                if(invalidOpen > 0){
-                    solve(s, ans, invalidOpen-1, invalidClose, balance, index+1, output);
+            if(s[index]=='('){
+                if(open>0){
+                    solve(s, ans, open-1, close, bal, index+1, output);
                 }
-                // remove na Karu
-                output.push_back('(');
-                solve(s, ans,invalidOpen, invalidClose, balance+1, index+1, output);
+                output.push_back(s[index]);
+                solve(s, ans, open, close, bal+1, index+1, output);
                 output.pop_back();
-
-            }else if(s[index] == ')'){
-                // remove karu
-                if(invalidClose > 0){
-                    solve(s, ans, invalidOpen, invalidClose-1, balance, index+1, output);
+            }else if(s[index]==')'){
+                if(close>0){
+                    solve(s, ans, open, close-1, bal, index+1, output);
                 }
-                // remove na karu
-                // ap ek clode bracket pr khade ho, and previously koi nhi open bracket present nhi hai
-                // toh kya mai ise remove na kru ?
-                if(balance > 0){
-                    // koi nakoi opening brachet present hai
-                    output.push_back(')');
-                    solve(s, ans, invalidOpen, invalidClose, balance-1, index+1, output);
+                if(bal>0){
+                    output.push_back(s[index]);
+                    solve(s, ans, open, close, bal-1, index+1, output);
                     output.pop_back();
                 }
             }
-
         }
     }
     vector<string> removeInvalidParentheses(string s) {
