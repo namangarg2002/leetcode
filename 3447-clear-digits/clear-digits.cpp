@@ -4,7 +4,7 @@ public:
         stack<char> st;
         for(int i=0; i<s.length(); i++){
             char ch = s[i];
-            if(ch >= '0' && ch <= '9'){
+            if(isdigit(ch)){
                 // ch is digit;
                 st.pop();
             }else{
