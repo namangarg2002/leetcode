@@ -3,7 +3,6 @@ public:
     void solve(string mapping[], string output, int index, vector<string>&ans, string str){
         // base case
         if(index >= str.length()){
-            cout<<"Inside Base case"<<endl;
             // output me strign bn chuki hogi
             // store that string in ans array
             if(output.length() > 0){
@@ -12,10 +11,8 @@ public:
             return;
         }
         string temp = mapping[str[index]-'0'];
-        cout<<"Printing temp: "<<temp<<endl;
         for(auto ch:temp){
             output.push_back(ch);
-            cout<<"Inserting "<<ch<<" In output: "<<output<<endl;
             solve(mapping, output, index+1, ans, str);
             // backtracking concept
             output.pop_back();
