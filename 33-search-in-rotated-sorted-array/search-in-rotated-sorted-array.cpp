@@ -40,18 +40,39 @@ public:
 
     int search(vector<int>& nums, int target) {
         int n = nums.size();
-        if (n == 0) return -1;
+        // M1:
+        vector<pair<int, int>>vec;
+        for(int i=0; i<n; i++){
+            vec.push_back({nums[i], i});
+        }
+        sort(vec.begin(), vec.end());
+        int s = 0;
+        int e = n-1;
+        int mid = s + (e-s)/2;
+        while(s<=e){
+            if(vec[mid].first == target){
+                return vec[mid].second;
+            }else if(vec[mid].first < target){
+                s = mid + 1;
+            }else{
+                e = mid - 1;
+            }
+            mid = s + (e-s)/2;
+        }
+        return -1;
+
+        // if (n == 0) return -1;
         
-        int pivotIndex = findPivotIndex(nums);
+        // int pivotIndex = findPivotIndex(nums);
 
-        if (pivotIndex == -1) {
-            return binarySearch(nums, 0, n - 1, target);
-        }
+        // if (pivotIndex == -1) {
+        //     return binarySearch(nums, 0, n - 1, target);
+        // }
 
-        if (target >= nums[0] && target <= nums[pivotIndex]) {
-            return binarySearch(nums, 0, pivotIndex, target);
-        } else {
-            return binarySearch(nums, pivotIndex + 1, n - 1, target);
-        }
+        // if (target >= nums[0] && target <= nums[pivotIndex]) {
+        //     return binarySearch(nums, 0, pivotIndex, target);
+        // } else {
+        //     return binarySearch(nums, pivotIndex + 1, n - 1, target);
+        // }
     }
 };
