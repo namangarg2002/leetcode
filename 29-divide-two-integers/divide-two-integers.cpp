@@ -1,7 +1,7 @@
 class Solution {
 public:
     int getQuotient(long long dividend, long long divisor) {
-        long long s = 0, e = dividend / divisor; // Optimized range
+        long long s = 0, e = dividend / divisor;
         long long ans = 0;
 
         while (s <= e) {
@@ -10,7 +10,7 @@ public:
 
             if (product == dividend) return mid;
             else if (product < dividend) {
-                ans = mid; // Store potential answer
+                ans = mid;
                 s = mid + 1;
             } else {
                 e = mid - 1;
@@ -20,17 +20,13 @@ public:
     }
 
     int divide(int dividend, int divisor) {
-        // Handle overflow case
         if (dividend == INT_MIN && divisor == -1) return INT_MAX;
 
-        // Convert to long long to prevent overflow
         long long num = abs((long long)dividend);
         long long den = abs((long long)divisor);
 
-        // Use binary search to find quotient
         long long ans = getQuotient(num, den);
 
-        // Apply sign
         return (dividend < 0) ^ (divisor < 0) ? -ans : ans;
     }
 };
