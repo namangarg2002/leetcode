@@ -3,7 +3,7 @@ public:
     int findMinDifference(vector<string>& timePoints) {
         vector<int>Time;
         for(auto& s:timePoints){
-            size_t colonPos = s.find(':');
+            int colonPos = s.find(':');
             int hours = stoi(s.substr(0, colonPos));
             int minutes = stoi(s.substr(colonPos+1));
 
@@ -12,6 +12,7 @@ public:
             Time.push_back(minutesToPush);
         }
         sort(Time.begin(), Time.end());
+
         int minTime = INT_MAX;
         for(int i=1; i<Time.size(); i++){
             minTime = min(minTime, Time[i]-Time[i-1]);
