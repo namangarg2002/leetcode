@@ -1,29 +1,25 @@
 class Solution {
 public:
     string decodeMessage(string key, string message) {
-        // create Mapping
         char start = 'a';
-        char mapping[280] = {0};
-        for(auto ch: key){
-            if(ch!=' ' && mapping[ch]==0){
-                mapping[ch] = start;
+        unordered_map<char, char>mp;
+        for(int i=0; i<key.size(); i++){
+            char ch = key[i];
+            if(ch != ' ' && mp.count(ch) == 0){
+                mp[ch] = start;
                 start++;
             }
         }
-
-        // use Mapping
-        string ans;
-
-        for(int i=0; i<message.length(); i++){
+        string ans = "";
+        for(int i=0; i<message.size(); i++){
             char ch = message[i];
-            if(ch!=' '){
-                char decodedChar = mapping[ch];
-                ans.push_back(decodedChar);
+            if(ch != ' '){
+                char decodedCode = mp[ch];
+                ans.push_back(decodedCode);
             }else{
                 ans.push_back(' ');
             }
         }
         return ans;
-
     }
 };
