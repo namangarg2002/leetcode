@@ -10,29 +10,15 @@
  */
 class Solution {
 public:
-    ListNode* reverseUsingRecursion( ListNode* prev,ListNode* curr){
-        // base case
-        if(curr == NULL){
-            return prev;
-        }
-        // 1 case we have solve next recursion will handle it
-        ListNode* nextNode = curr->next;
-        curr->next = prev;
-        return reverseUsingRecursion(curr, nextNode);
-
-    }
     ListNode* reverseList(ListNode* head) {
-        ListNode *prev = NULL;
-        ListNode *curr = head;
-        // while(curr != NULL){
-        //     ListNode *next = curr->next;
-        //     curr->next = prev;
-        //     prev = curr;
-        //     curr = next;
-        // }
-        // return prev;
-
-        return reverseUsingRecursion(prev, curr);
-
+        ListNode* prevNode = NULL;
+        ListNode* currNode = head;
+        while(currNode != NULL){
+            ListNode* nextNode = currNode->next;
+            currNode->next = prevNode;
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+        return prevNode;
     }
 };
