@@ -9,24 +9,16 @@
 class Solution {
 public:
     bool hasCycle(ListNode *head) {
-        unordered_map<ListNode* , bool> mapping;
+        unordered_map<ListNode* , bool>mp;
         ListNode* temp = head;
-
         while(temp != NULL){
-            // address check
-            if(mapping.find(temp) != mapping.end()){
-                // cycle present
+            if(mp[temp] == false){
+                mp[temp] = true;
+            }else{
                 return true;
-            }
-            else{
-                // node not visisted beforehead
-                // store
-                mapping[temp] = true;
             }
             temp = temp->next;
         }
-        // cycle absent
         return false;
-        
     }
 };
