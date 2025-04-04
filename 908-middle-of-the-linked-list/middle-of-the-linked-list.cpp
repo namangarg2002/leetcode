@@ -10,27 +10,40 @@
  */
 class Solution {
 public:
-    int getLength(ListNode* head) {
-        ListNode* temp = head;
-        int count = 0;
-        while(temp != NULL){
-            temp = temp->next;
-            count++;
-        }
-        return count;
-    }
+    // int getLength(ListNode* head) {
+    //     ListNode* temp = head;
+    //     int count = 0;
+    //     while(temp != NULL){
+    //         temp = temp->next;
+    //         count++;
+    //     }
+    //     return count;
+    // }
     ListNode* middleNode(ListNode* head) {
-        int size = getLength(head);
-        int position = size/2 + 1;
-        int currPosition = 1;
-        ListNode* temp = head;
-        while(currPosition != position){
-            temp = temp->next;
-            currPosition++;
+
+        // Iterative Approach
+
+        // int size = getLength(head);
+        // int position = size/2 + 1;
+        // int currPosition = 1;
+        // ListNode* temp = head;
+        // while(currPosition != position){
+        //     temp = temp->next;
+        //     currPosition++;
+        // }
+        // return temp;
+
+
+        // Tortoise Alogorithm
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast != NULL){
+            fast = fast->next;
+            if(fast != NULL){
+                fast = fast->next;
+                slow = slow->next;
+            }
         }
-        return temp;
-
-
-        return head;
+        return slow;
     }
 };
