@@ -4,28 +4,21 @@ public:
         stack<char>st;
         for(int i=0; i<s.length(); i++){
             char ch = s[i];
-            if(ch == '(' || ch == '{' || ch == '['){
-                // for open brackets-> just push
+            if(ch=='(' || ch=='{' || ch=='['){
                 st.push(ch);
             }else{
-                // Check if stack is empty before accessing the top
-                if(st.empty()) {
+                if(st.empty()){
                     return false;
-                }
-                // closing bracket
-                if((ch == ')' && st.top() == '(') || (ch == '}' && st.top() == '{') || (ch == ']' && st.top() == '[')){
-                    // matched
+                }else if((ch==')' && st.top() == '(') || (ch=='}' && st.top() == '{') || (ch==']' && st.top() == '[')){
                     st.pop();
-                }else {
+                }else{
                     return false;
                 }
-
             }
         }
-        if(st.size() == 0){
+        if(st.empty()){
             return true;
-        }else{
-            return false;
         }
+        return false;
     }
 };
