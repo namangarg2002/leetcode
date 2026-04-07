@@ -4,18 +4,18 @@ public:
         int n = nums.size();
 
         int s = 0;
-        int h = n-1;
+        int e = n-1;
+        int ans = n;
 
-        while(s<=h){
-            int mid = s + (h-s)/2;
-            if(nums[mid] == target){
-                return mid;
-            }else if(target > nums[mid]){
-                s = mid + 1;
+        while(s<=e){
+            int mid = s + (e-s)/2;
+            if(nums[mid] >= target){
+                ans =  mid;
+                e = mid - 1;
             }else{
-                h = mid - 1;
+                s = mid + 1;
             }
         }
-        return s;
+        return ans;
     }
 };
