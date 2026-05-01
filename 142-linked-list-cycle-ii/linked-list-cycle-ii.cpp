@@ -17,19 +17,18 @@ public:
                 fast = fast->next;
                 slow = slow->next;
             }
-            if(fast == slow){
+            if(slow == fast){
                 break;
             }
         }
-        if(fast == NULL || fast->next == NULL){
+        if(fast == NULL){
             return NULL;
         }
         slow = head;
-        while(fast != slow){
+        while(slow != fast){
             slow = slow->next;
             fast = fast->next;
         }
-
         return slow;
     }
 };
