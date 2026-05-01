@@ -10,40 +10,30 @@
  */
 class Solution {
 public:
-    // int getLength(ListNode* head) {
-    //     ListNode* temp = head;
-    //     int count = 0;
-    //     while(temp != NULL){
-    //         temp = temp->next;
-    //         count++;
-    //     }
-    //     return count;
-    // }
-    ListNode* middleNode(ListNode* head) {
-
-        // Iterative Approach
-
-        // int size = getLength(head);
-        // int position = size/2 + 1;
-        // int currPosition = 1;
-        // ListNode* temp = head;
-        // while(currPosition != position){
-        //     temp = temp->next;
-        //     currPosition++;
-        // }
-        // return temp;
-
-
-        // Tortoise Alogorithm
-        ListNode* slow = head;
-        ListNode* fast = head;
-        while(fast != NULL){
-            fast = fast->next;
-            if(fast != NULL){
-                fast = fast->next;
-                slow = slow->next;
-            }
+    int getLength(ListNode* &head){
+        if(head == NULL) return 0;
+        ListNode* temp = head;
+        int count = 0;
+        while(temp != NULL){
+            temp = temp->next;
+            count++;
         }
-        return slow;
+        return count;
+    }
+    ListNode* middleNode(ListNode* head) {
+        if(head->next == NULL) return head;
+
+        int length = getLength(head);
+        int middleIndex = length/2;
+        ListNode* prev = NULL;
+        ListNode* curr = head;
+        int currNodeIndex = 0;
+        while(currNodeIndex < middleIndex){
+            prev = curr;
+            curr = curr->next;
+            currNodeIndex++;
+        }
+
+        return curr;
     }
 };
