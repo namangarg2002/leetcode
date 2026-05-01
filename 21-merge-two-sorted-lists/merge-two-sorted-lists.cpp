@@ -11,29 +11,29 @@
 class Solution {
 public:
     ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
+        if(list1 == NULL) return list2;
+        if(list2 == NULL) return list1;
 
+        ListNode* newList = new ListNode(NULL);
 
-        ListNode* ans = new ListNode(NULL);
-        ListNode* mptr = ans;
+        ListNode* temp = newList;
         while(list1 && list2){
             if(list1->val <= list2->val){
-                mptr->next = list1;
-                mptr = list1;
+                temp->next = list1;
+                temp = list1;
                 list1 = list1->next;
             }else{
-                mptr->next = list2;
-                mptr = list2;
+                temp->next = list2;
+                temp = list2;
                 list2 = list2->next;
             }
         }
         if(list1){
-            mptr->next = list1;
+            temp->next = list1;
         }
         if(list2){
-            mptr->next = list2;
+            temp->next = list2;
         }
-
-        return ans->next;
-        
+        return newList->next;
     }
 };
